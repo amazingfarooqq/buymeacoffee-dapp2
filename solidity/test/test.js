@@ -5,24 +5,23 @@
     // and reset Hardhat Network to that snapshot in every test.
     // Contracts are deployed using the first signer/account by default
 
-    let owner , a1 , a2 , coffeeContract;
+    let owner , a1 , a2 , pageContract;
     describe("tests", async function () {
         it("deploy", async function () {
             [owner, a1 , a2] = await ethers.getSigners();
         
-            let CoffeeContractFactory = await ethers.getContractFactory("CoffeContract");
-            coffeeContract = await CoffeeContractFactory.deploy();
+            let PageNFTFactory = await ethers.getContractFactory("PageNFT");
+            pageContract = await PageNFTFactory.deploy();
         });
         it("Register page1", async function () {
-          let RegisterDomain1 = await coffeeContract.RegisterPage("farooq");
+          let mint = await pageContract.mintPageNFT(a1.address, "farooq", "this");
+          await mint.wait()
 
-          await RegisterDomain1.wait()
+          let pageHolderAttributes = await pageContract.pageHolderAttributes("1");
 
-
+          console.log('pageHolderAttributes' , pageHolderAttributes);
         });
         it("Register page1", async function () {
-          let RegisterDomain2 = await coffeeContract.RegisterPage("farooq");
-          await RegisterDomain2.wait()
 
 
         });

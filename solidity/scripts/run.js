@@ -2,19 +2,26 @@ const fs = require("fs");
 
 const main = async () => {
 
-      const coffeeContractFactory = await hre.ethers.getContractFactory('CoffeContract');
-      const coffeeContract = await coffeeContractFactory.deploy();
+    //   const coffeeContractFactory = await hre.ethers.getContractFactory('CoffeContract');
+    //   const coffeeContract = await coffeeContractFactory.deploy();
     
-      await coffeeContract.deployed(); 
+    //   await coffeeContract.deployed(); 
     
-     console.log("Coffee Contract deployed to:", coffeeContract.address);
+    //  console.log("Coffee Contract deployed to:", coffeeContract.address);
 
-     const contractArtifactCoffeContract = artifacts.readArtifactSync("CoffeContract");
+    //  const contractArtifactCoffeContract = artifacts.readArtifactSync("CoffeContract");
 
-     fs.writeFileSync('../frontend/smartContractData/coffeeContract.js', `
-     export const coffeeContractAddress = "${coffeeContract.address}"
-     export const coffeeContractjson = ${JSON.stringify(contractArtifactCoffeContract, null, 2)}
-     `)
+    //  fs.writeFileSync('../frontend/smartContractData/coffeeContract.js', `
+    //  export const coffeeContractAddress = "${coffeeContract.address}"
+    //  export const coffeeContractjson = ${JSON.stringify(contractArtifactCoffeContract, null, 2)}
+    //  `)
+
+
+    const pageNFTFactory = await hre.ethers.getContractFactory('PageNFT');
+    const pageContract = await pageNFTFactory.deploy();
+  
+    await pageContract.deployed(); 
+    console.log("pageContract deployed to:", pageContract.address);
    
     };
     
