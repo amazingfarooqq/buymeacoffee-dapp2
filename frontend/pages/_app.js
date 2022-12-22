@@ -15,6 +15,7 @@ import { Router } from 'next/router';
 
 import NProgress from 'nprogress'; //nprogress module
 import 'nprogress/nprogress.css'; //styles of nprogress
+import Header from '../components/Header/Header';
 
 //Binding events. 
 Router.events.on('routeChangeStart', () => NProgress.start()); 
@@ -26,6 +27,7 @@ function MyApp({ Component, pageProps }) {
     <>
     <Web3ReactProvider getLibrary={getLibrary}>
       <ContextAPIProvider >
+        <Header />
         <Component {...pageProps} />
       </ContextAPIProvider>
     </Web3ReactProvider>

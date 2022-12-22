@@ -9,20 +9,30 @@ const main = async () => {
     
     //  console.log("Coffee Contract deployed to:", coffeeContract.address);
 
-    //  const contractArtifactCoffeContract = artifacts.readArtifactSync("CoffeContract");
-
-    //  fs.writeFileSync('../frontend/smartContractData/coffeeContract.js', `
-    //  export const coffeeContractAddress = "${coffeeContract.address}"
-    //  export const coffeeContractjson = ${JSON.stringify(contractArtifactCoffeContract, null, 2)}
+    
+    
+    
+    
+    const DonaterNFTFactory = await hre.ethers.getContractFactory('Lottery');
+    const pageContract = await DonaterNFTFactory.deploy();
+    
+    await pageContract.deployed(); 
+    console.log("pageContract deployed to:", pageContract.address);
+    
+    
+    // const contractArtifactPageContract = artifacts.readArtifactSync("DonaterNFT");
+    // fs.writeFileSync('../frontend/smartContractData/coffeeContract.js', `
+    //  export const pageContractAddress = "${pageContract.address}"
+    //  export const pageContractjson = ${JSON.stringify(contractArtifactPageContract, null, 2)}
     //  `)
 
 
-    const pageNFTFactory = await hre.ethers.getContractFactory('PageNFT');
-    const pageContract = await pageNFTFactory.deploy();
-  
-    await pageContract.deployed(); 
-    console.log("pageContract deployed to:", pageContract.address);
+    // await pageContract.mintPageNFT(process.env.PUBLIC_KEY, "haider", "https://avatars.githubusercontent.com/u/75162162?v=4")
+    // await pageContract.donateToPage(1, 1, 'ahmed', "Amazing page")
+    // donateToPage(uint _coffees, uint _pageid,string memory _contributername, string memory _contributermessage)
+    // await pageContract.mintDonaterNFT(process.env.PUBLIC_KEY, "hazique", "https://avatars.githubusercontent.com/u/75162162?v=4")
    
+    console.log('done minting');
     };
     
     const runMain = async () => {

@@ -49,9 +49,15 @@ export function IntegrationWallets({btnName}) {
   return (
     <>
 
-      <button className="btn btn-warning m-1 px-4 rounded-pill fs-5" onClick={handleShow}>
+    {btnName == 'connect wallet' ?
+      <button className="btn btn-outline-dark m-1 rounded-pill" onClick={handleShow}>
         {btnName}
-      </button>
+      </button>:
+      <button className="btn btn-warning m-1 px-4 rounded-pill fs-5 fw-bold" onClick={handleShow}>
+      {btnName}
+    </button>
+    }
+
 
       <Modal show={show} onHide={handleClose} style={{ zIndex: "11111" }}>
         <Modal.Header closeButton>
