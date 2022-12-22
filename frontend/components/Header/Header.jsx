@@ -11,14 +11,12 @@ const Header = () => {
 
     const [member, setMember] = useState({membername:""})
 
-    console.log('member',member); 
     const fetch = async () => {
         if(active){
             const signer = library?.getSigner(account)
             const pageCon = new ethers.Contract(pageContractAddress, pageContractjson.abi, signer)
             const addresstopagename = await pageCon.addresstopagename(account)
             setMember({membername: addresstopagename})
-
         }
     }
 

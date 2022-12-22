@@ -19,7 +19,6 @@ export const ContextAPIProvider = ({ children }) => {
 
   const [members, setMembers] = useState({isLoading: true, data: []})
 
-  console.log({members});
   useEffect(() => {
         // fetchData();
   }, []);

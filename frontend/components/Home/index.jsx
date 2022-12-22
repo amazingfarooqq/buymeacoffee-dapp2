@@ -9,6 +9,7 @@ import { useContextAPI } from '../../lib/contextapi'
 import MessageBox from '../MessgeBox/MessageBox'
 import { IntegrationWallets } from '../Wallet/IntegratedWallets'
 import { imagescollection } from '../../lib/imagescollection'
+import { pageContractAddress, pageContractjson } from '../../smartContractData/coffeeContract'
 
 export default function HomePage() {
   const {message , setMessage, members, setMembers} = useContextAPI()

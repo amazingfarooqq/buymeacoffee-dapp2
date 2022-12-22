@@ -39,7 +39,6 @@ const PageExist = ({page , setPage}) => {
             try {
                 setIsLoading(true)
                 const signer = library?.getSigner(account)
-                console.log({page});
                 const pageCon = new ethers.Contract(pageContractAddress, pageContractjson.abi, signer);
                 const tx = await pageCon.donateToPage(coffees, page.pagenametopageidString,username, usermessage)
                 await tx.wait()
@@ -104,7 +103,6 @@ const PageExist = ({page , setPage}) => {
                     {!page.pagenameExists && "No page with this name"}
                     {page?.contributers?.length < 1 && <h3 className='p-4'>If someone contribute, they will showup here..</h3>}
                     {page?.contributers?.map(item => {
-                        console.log(item)
                         return <div key={item.id} className='py-3 px-3 rounded mt-4' style={{background: "white"}}> 
                             <div className="row">
                                 <div className="col-4" style={{width: 90}}>

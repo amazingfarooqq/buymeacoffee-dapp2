@@ -7,8 +7,8 @@ const PageLoading = () => {
         
         <div className="col-lg-12 p-4 bg-light rounded text-start">
             <div className=' '>
-            <h1 class="card-title placeholder-glow">
-                <span class="rounded placeholder col-3"></span>
+            <h1 className="card-title placeholder-glow">
+                <span className="rounded placeholder col-3"></span>
             </h1>
             <p className='placeholder-glow rounded'> <span className='placeholder col-3 rounded'>0</span> </p>
             <p className='placeholder-glow rounded'> <span className='placeholder col-2 rounded'>0</span> </p>

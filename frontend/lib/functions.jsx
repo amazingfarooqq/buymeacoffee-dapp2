@@ -7,7 +7,6 @@ export const pagefunc = async (contextpage) => {
     const provider = new ethers.providers.JsonRpcProvider(RPC);
     const pageCon = new ethers.Contract(pageContractAddress, pageContractjson.abi, provider);
     const pagenameExists = await pageCon.pagenameExists(contextpage);
-    console.log({pagenameExists});
     if(pagenameExists){
         const pagenametopageid = await pageCon.pagenametopageid(contextpage);
         const pagenametopageidString = pagenametopageid.toString()
@@ -37,10 +36,6 @@ export const pagefunc = async (contextpage) => {
             })
           }
           
-          console.log({
-            pagenametopageidString,pagename,donatePrice,imageURI,memberaddress,totaldonater,contributers
-          })
-
           return { props: { loading: false, pagenameExists , page: contextpage ,pagenametopageidString,pagename,donatePrice,imageURI,memberaddress,totaldonater, contributers } };
         }else {
            return { props: { loading: false, pagenameExists , page: contextpage } };
