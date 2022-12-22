@@ -5,7 +5,7 @@ import { useContextAPI } from '../../lib/contextapi'
 import { pageContractAddress, pageContractjson } from '../../smartContractData/coffeeContract'
 import { IntegrationWallets } from '../Wallet/IntegratedWallets'
 
-const Page = ({page , setPage}) => {
+const PageExist = ({page , setPage}) => {
 
     const {active , account, library} = useWeb3React()
     const {message, setMessage} = useContextAPI()
@@ -114,7 +114,7 @@ const Page = ({page , setPage}) => {
                                 <div className="col"style={{display: "flex" , alignItems: "center"}}>
                                     <div className="row">
                                         <div className="col-12">
-                                        <span><b >{item.contributername}</b>  bought {item.contributedcoffees} coffee's</span>
+                                        <span><b >{item.contributername}</b>  bought {item.contributedcoffees} coffee</span>
                                         </div>
                                         <div className="col-12">
                                         <button className='btn p-0 m-0'>{item.contributerAddress?.slice(0,3)}...{item.contributerAddress?.slice(-3)}</button>
@@ -147,4 +147,4 @@ const Page = ({page , setPage}) => {
   )
 }
 
-export default Page
+export default PageExist

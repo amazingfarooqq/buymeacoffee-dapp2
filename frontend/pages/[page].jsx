@@ -15,7 +15,7 @@ import { pageContractAddress, pageContractjson } from '../smartContractData/coff
 import { pagefunc } from '../lib/functions';
 import PageLoading from '../components/Page/PageLoading';
 import PageNotFound from '../components/Page/PageNotFound';
-import Page from '../components/Page/Page';
+import PageExist from '../components/Page/PageExist';
 
 export async function getServerSideProps(context) {
     
@@ -103,7 +103,7 @@ const page = (props) => {
             }
 
             {!page.loading && page.pagenameExists &&
-              <Page page={page} setPage={setPage}/>
+              <PageExist page={page} setPage={setPage}/>
             }
 
             {!page.loading && !page.pagenameExists &&
