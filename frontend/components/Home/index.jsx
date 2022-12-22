@@ -25,7 +25,7 @@ export default function HomePage() {
   const registerPage = async () => {
 
     if(!pageName){
-      setMessage({message: "invalid page name" , isMessage: true, color: "danger"})
+      setMessage({message: "invalid page name." , isMessage: true, color: "danger"})
       return
     }
     try {
