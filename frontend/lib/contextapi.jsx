@@ -35,7 +35,6 @@ export const ContextAPIProvider = ({ children }) => {
 
   const fetchContract = async () => {
     const RPC = 'https://goerli.infura.io/v3/3d319cf813f841eba0cfeb6ac6c7e01c'
-    console.log('env',process.env.REACT_APP_RPC);
     const provider = new ethers.providers.JsonRpcProvider(RPC);
     const pageCon = new ethers.Contract(pageContractAddress, pageContractjson.abi, provider);
     const totalPageNfts = await pageCon.totalPageNfts()
