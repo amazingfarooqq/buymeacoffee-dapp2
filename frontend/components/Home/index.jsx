@@ -24,8 +24,9 @@ export default function HomePage() {
 
   const registerPage = async () => {
 
-    if(!pageName){
-      setMessage({message: "invalid page name." , isMessage: true, color: "danger"})
+    if(!pageName || !pageName.match('^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$')){
+      console.log('not matched');
+      setMessage({message: "invalid page name, greater than 4, less than 20, Just number and characters" , isMessage: true, color: "danger"})
       return
     }
     try {
@@ -34,22 +35,25 @@ export default function HomePage() {
       const signer = library?.getSigner(account)
       const pageCon = new ethers.Contract(pageContractAddress, pageContractjson.abi, signer);
 
+      let page = pageName
+      page.toLocaleLowerCase()
+
       const totalPageNfts = await pageCon.totalPageNfts()
       const pageidstring = totalPageNfts.toString()
 
-      const tx = await pageCon.mintPageNFT(pageName, nftimag)
+      const tx = await pageCon.mintPageNFT(page, nftimag)
       await tx.wait()
 
       setActionMessage({message: "Redirecting please wait", href:""})
 
-      router.push(pageName)
+      router.push(page)
 
 
       setMembers({Loading: false, data: [
         ...members.data,
         {
           pageid: pageidstring,
-          pagename: pageName,
+          pagename: page,
           memberaddress: account,
           donatePrice: '0.001',
           imageURI: nftimag,
