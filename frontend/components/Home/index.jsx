@@ -37,7 +37,7 @@ export default function HomePage() {
       const totalPageNfts = await pageCon.totalPageNfts()
       const pageidstring = totalPageNfts.toString()
 
-      const tx = await pageCon.mintPageNFT(account, pageName, nftimag)
+      const tx = await pageCon.mintPageNFT(pageName, nftimag)
       await tx.wait()
 
       setActionMessage({message: "Redirecting please wait", href:""})
@@ -52,7 +52,7 @@ export default function HomePage() {
           pagename: pageName,
           memberaddress: account,
           donatePrice: '0.001',
-          imageURI: _imgUrl,
+          imageURI: nftimag,
           totaldonater: 0
         }
       ]})

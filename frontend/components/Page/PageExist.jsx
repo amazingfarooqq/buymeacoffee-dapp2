@@ -1,5 +1,6 @@
 import { useWeb3React } from '@web3-react/core'
 import { ethers } from 'ethers'
+import { formatEther, parseEther } from 'ethers/lib/utils'
 import React, { useState } from 'react'
 import { useContextAPI } from '../../lib/contextapi'
 import { pageContractAddress, pageContractjson } from '../../smartContractData/coffeeContract'
@@ -40,7 +41,7 @@ const PageExist = ({page , setPage}) => {
                 setIsLoading(true)
                 const signer = library?.getSigner(account)
                 const pageCon = new ethers.Contract(pageContractAddress, pageContractjson.abi, signer);
-                const tx = await pageCon.donateToPage(coffees, page.pagenametopageidString,username, usermessage)
+                const tx = await pageCon.donateToPage(coffees, page.pagenametopageidString,username, usermessage, {value: parseEther("0.001")})
                 await tx.wait()
 
                 setPage({
@@ -73,26 +74,50 @@ const PageExist = ({page , setPage}) => {
         
     }
 
+    const [isWithDrawing, setIsWithDrawing] = useState(false)
+    const withDraw = async () => {
+        try {
+        setIsWithDrawing(true)
+        const signer = library?.getSigner(account)
+        const pageCon = new ethers.Contract(pageContractAddress, pageContractjson.abi, signer);
+        const tx = await pageCon.WithdrawAmount(page.pagenametopageidString)
+        await tx.wait()
+        
+        setIsWithDrawing(false)
+
+    } catch (error) {
+        console.log(error);
+        setIsWithDrawing(false)
+
+        setMessage({message: error.reason || error.message, isMessage: true, color: "danger"});
+    }
+    }
+
     
   return (
         <div className='container'>
         <div className="row mt-5 px-xl-5 mx-xl-5  justify-content-center">
                     <div className="col-lg-12 p-4 bg-light  rounded text-start">
                         <div className=' '>
-                        <h1>{page.pagenameExists ? page?.pagename : '.....'}</h1>
+                        <h1>{page?.pagename}</h1>
                         <p>Total Contributors: {page.contributers?.length}</p>
-                        <p>{page.pagenameExists ? `${page?.memberaddress?.slice(0,4)}...${page?.memberaddress?.slice(-4)}` : "Ox00.0000"} </p>
+                        <p>{`${page?.memberaddress?.slice(0,4)}...${page?.memberaddress?.slice(-4)}`} </p>
 
+                        <div className="m-0 p-0 rounded">Price of 1 coffee  <b>{(page.donatePrice) } ether</b> </div>
+                        <br />
 
-                        {!page.pagenameExists &&
-                            <button className="btn btn-danger m-1 px-4 rounded-pill fs-5">No Member found with <b>{props.page}</b> </button>
-                        }
-
-                        {page.pagenameExists &&
-                            <button className="btn btn-danger m-1 px-4 rounded-pill fs-5">Price of 1 coffee  <b>{(page.donatePrice) } ether</b> </button>
-                        }
+                       
                         {page.memberaddress == account &&
-                        <button className="btn btn-danger m-1 px-4 rounded-pill fs-5" onClick={() => updateCoffeePrice(page.pagename, "0.0001")}>Update Coffee</button>
+                        <>
+                        {isWithDrawing ? 
+                        <button className="btn btn-primary m-1 mx-0 px-4 rounded fs-5 disabled">Processing.. </button>
+                            :
+                        <button className="btn btn-primary m-1 mx-0 px-4 rounded fs-5" onClick={withDraw}>Withdraw <b>{(page.totalamounttowithdraw) } ether</b> </button>
+
+                        }
+                        <br />
+                        {/* <button className="btn btn-primary m-1 mx-0 px-4 rounded fs-5" onClick={() => updateCoffeePrice(page.pagename, "0.0001")}>Update Coffee</button> */}
+                        </>
                         }
 
                         </div>

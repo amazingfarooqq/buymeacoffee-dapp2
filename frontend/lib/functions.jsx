@@ -20,6 +20,9 @@ export const pagefunc = async (contextpage) => {
         const totaldonater = pageHolderAttributes.totaldonater.toString()
   
         const getcontributers = await pageCon.getContributers(pagenametopageidString)
+        let totalamounttowithdraw = await pageCon.totalAmountForMemberToWithdraw(memberaddress)
+
+        totalamounttowithdraw = formatEther(totalamounttowithdraw)
 
         let contributers = []
         for(let j=0;j<getcontributers.length;j++){
@@ -36,7 +39,7 @@ export const pagefunc = async (contextpage) => {
             })
           }
           
-          return { props: { loading: false, pagenameExists , page: contextpage ,pagenametopageidString,pagename,donatePrice,imageURI,memberaddress,totaldonater, contributers } };
+          return { props: { loading: false, pagenameExists , page: contextpage ,pagenametopageidString,pagename,donatePrice,imageURI,memberaddress,totaldonater, contributers, totalamounttowithdraw} };
         }else {
            return { props: { loading: false, pagenameExists , page: contextpage } };
         }

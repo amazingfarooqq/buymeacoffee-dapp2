@@ -1,30 +1,20 @@
 const fs = require("fs");
 
 const main = async () => {
-
-    //   const coffeeContractFactory = await hre.ethers.getContractFactory('CoffeContract');
-    //   const coffeeContract = await coffeeContractFactory.deploy();
-    
-    //   await coffeeContract.deployed(); 
-    
-    //  console.log("Coffee Contract deployed to:", coffeeContract.address);
-
     
     
-    
-    
-    const DonaterNFTFactory = await hre.ethers.getContractFactory('Lottery');
+    const DonaterNFTFactory = await hre.ethers.getContractFactory('DonaterNFT');
     const pageContract = await DonaterNFTFactory.deploy();
     
     await pageContract.deployed(); 
     console.log("pageContract deployed to:", pageContract.address);
     
     
-    // const contractArtifactPageContract = artifacts.readArtifactSync("DonaterNFT");
-    // fs.writeFileSync('../frontend/smartContractData/coffeeContract.js', `
-    //  export const pageContractAddress = "${pageContract.address}"
-    //  export const pageContractjson = ${JSON.stringify(contractArtifactPageContract, null, 2)}
-    //  `)
+    const contractArtifactPageContract = artifacts.readArtifactSync("DonaterNFT");
+    fs.writeFileSync('../frontend/smartContractData/coffeeContract.js', `
+     export const pageContractAddress = "${pageContract.address}"
+     export const pageContractjson = ${JSON.stringify(contractArtifactPageContract, null, 2)}
+     `)
 
 
     // await pageContract.mintPageNFT(process.env.PUBLIC_KEY, "haider", "https://avatars.githubusercontent.com/u/75162162?v=4")

@@ -17,14 +17,14 @@ const page = (props) => {
 
     const {message, setMessage} = useContextAPI()
 
-    const [page, setPage] = useState({ loading: true,pagenametopageidString:"", pagenameExists:false, contributedcoffees:"", pagename:"",donatePrice:"",imageURI:"",memberaddress: "",totaldonater:"", contributers:[] })
+    const [page, setPage] = useState({ loading: true,pagenametopageidString:"", pagenameExists:false, contributedcoffees:"", pagename:"",donatePrice:"",imageURI:"",memberaddress: "",totaldonater:"", contributers:[], totalamounttowithdraw: ""})
 
     const fetch = async () => {
         
         const data = await pagefunc(props.page)
-        const { loading, pagenametopageidString, pagenameExists, contributedcoffees, pagename,donatePrice,imageURI,memberaddress,totaldonater, contributers } = data.props
+        const { loading, pagenametopageidString, pagenameExists, contributedcoffees, pagename,donatePrice,imageURI,memberaddress,totaldonater, contributers, totalamounttowithdraw } = data.props
 
-        setPage({ loading, pagenametopageidString, pagenameExists, contributedcoffees, pagename,donatePrice,imageURI,memberaddress,totaldonater, contributers })
+        setPage({ loading, pagenametopageidString, pagenameExists, contributedcoffees, pagename,donatePrice,imageURI,memberaddress,totaldonater, contributers, totalamounttowithdraw })
     }
 
     useEffect(() => {

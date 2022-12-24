@@ -92,35 +92,31 @@ contract DonaterNFT is ERC721 {
     }
     
     
-    function mintPageNFT(address _account, string memory _pagename, string memory _imgUrl) external {
+    function mintPageNFT(string memory _pagename, string memory _imgUrl) external {
         uint256 newItemId = _tokenIds.current();
 
-        uint pageid = addresstopageid[_account];
+        uint pageid = addresstopageid[msg.sender];
         Page memory p = pageHolderAttributes[pageid];
 
-        console.log('pagname' , p.pagename);
-
-        string memory addressRevertedReason = 'Address already Exists over: ';
-
-        require(!addressExists[_account], string.concat(addressRevertedReason,p.pagename) );
+        require(!addressExists[msg.sender], string.concat('Address already Exists over: ',p.pagename) );
         require(!pagenameExists[_pagename],"pagename already Exist") ;
 
         pageHolderAttributes[newItemId] = Page({
             pageid: newItemId,
             pagename: _pagename,
-            memberaddress: _account,
+            memberaddress: msg.sender,
             perCoffeePrice: 0.001 ether,
             imageURI: _imgUrl,
             totaldonater: 0,
             pageexits: true
         });
         pagenametopageid[_pagename]=newItemId;
-        addresstopageid[_account]=newItemId;
-        addresstopagename[_account]=_pagename;
-        addressExists[_account]=true;
+        addresstopageid[msg.sender]=newItemId;
+        addresstopagename[msg.sender]=_pagename;
+        addressExists[msg.sender]=true;
         pagenameExists[_pagename]=true;
 
-        _mint(_account, newItemId);
+        _mint(msg.sender, newItemId);
 
         _tokenIds.increment();
 
@@ -138,14 +134,21 @@ contract DonaterNFT is ERC721 {
     }
 
 
+    mapping(address => uint) public totalAmountForMemberToWithdraw;
+
     function donateToPage(uint _coffees, uint _pageid,string memory _contributername, string memory _contributermessage) public payable {
 
         Page memory p = pageHolderAttributes[_pageid];
 
         require(p.pageexits, "Page does not exist");
-        // require(msg.value >= p.perCoffeePrice, "not valid amout passed");
+        require(msg.value >= p.perCoffeePrice, "not valid ammount passed");
+
+        address memberAddress = p.memberaddress;
+        uint totalammount = msg.value;
+        totalAmountForMemberToWithdraw[memberAddress] = totalAmountForMemberToWithdraw[memberAddress]+totalammount;
 
         p.totaldonater = p.totaldonater+_coffees;
+        
         contributersid++;
         contributers[_pageid].push(Contributer({
             contributerid: contributersid,
@@ -156,5 +159,18 @@ contract DonaterNFT is ERC721 {
             coffees: _coffees
         }));
     }
+
+    function WithdrawAmount(uint256 _pageid) public {
+        Page memory p = pageHolderAttributes[_pageid];
+        require(p.memberaddress == msg.sender, "!owner");
+        require(totalAmountForMemberToWithdraw[msg.sender] > 0, "No amount");
+
+        address payable member = payable(msg.sender);
+        uint256 ammount2Transfer = totalAmountForMemberToWithdraw[msg.sender];
+        totalAmountForMemberToWithdraw[msg.sender] = 0;
+
+        member.transfer(ammount2Transfer);
+    }
+
 
 }
